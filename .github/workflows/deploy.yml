@@ -1,35 +1,20 @@
-name: Deploy to ghcr.io
+name: Test push tag
 
 on:
-  workflow_dispatch:
   push:
-    branches: [main]
+    branches: 
+      - master
 
-concurrency:
-  group: deploy-${{ github.ref }} # This ensures all runs for a branch are grouped
-  cancel-in-progress: true # Cancels any in-progress runs for this group
+permissions:
+  contents: write
 
 jobs:
-  build:
+  publish-npm:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # To attach provenance to the published package
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          platforms: linux/amd64
-          push: true
-          # github.repository_owner and github.repository are hardcoded
-          tags: ghcr.io/monperrus/test-repo-1:latest,ghcr.io/monperrus/test-repo-1:${{ github.sha }}
+      - uses: actions/checkout@v4
+      - run: git tag latest
+      # publish this new version to github (to give the Go module a new version)
+      - run: git push origin latest
