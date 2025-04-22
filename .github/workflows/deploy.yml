@@ -16,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0 
       - run: git tag latest
       # publish this new version to github (to give the Go module a new version)
