@@ -15,6 +15,8 @@ jobs:
       id-token: write # To attach provenance to the published package
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: git tag latest
       # publish this new version to github (to give the Go module a new version)
       - run: git push origin latest
