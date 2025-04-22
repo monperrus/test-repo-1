@@ -5,14 +5,13 @@ on:
     branches: 
       - main
 
-permissions:
-  contents: write
-  actions: write
 
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
     permissions:
+      contents: write
+      actions: write
       id-token: write # To attach provenance to the published package
     steps:
       - uses: actions/checkout@v4
