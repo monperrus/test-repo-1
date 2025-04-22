@@ -19,5 +19,5 @@ jobs:
           fetch-depth: 0 
       - run: git tag latest
       # publish this new version to github (to give the Go module a new version)
-      - run: git remote set-url origin https://github-actions[bot]:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+      - run: git remote set-url origin https://github-actions[bot]:${{ secrets.PAT }}@github.com/${{ github.repository }}.git
       - run: git push origin latest
