@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   publish-npm:
@@ -15,8 +16,8 @@ jobs:
       id-token: write # To attach provenance to the published package
     steps:
       - uses: actions/checkout@v4
-        with:
-           token: ${{ secrets.PAT }}
+#        with:
+#           token: ${{ secrets.PAT }}
 #          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
 #          fetch-depth: 0 
       - run: git tag latest
